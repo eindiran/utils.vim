@@ -20,11 +20,6 @@ let g:loaded_utilsvim = 1
 "---------------------------------------------------------------------
 command! -nargs=0 UpdatePatchVersion execute utilsvim#UpdatePatchVersion()
 nnoremap <nowait> <silent> <Plug>(UpdatePatchVersion) :call utilsvim#UpdatePatchVersion()<CR>
-" If we have set the relevant config option set, enable an autocmd for automatic
-" version incrementing
-if exists("g:utilsvim_autoversion") && g:utilsvim_autoversion == 1
-    autocmd! BufWritePre * :call UpdatePatchVersion()
-endif
 
 "---------------------------------------------------------------------
 " Minor verson
@@ -43,11 +38,6 @@ nnoremap <nowait> <silent> <Plug>(UpdateMajorVersion) :call utilsvim#UpdateMajor
 "---------------------------------------------------------------------
 command! -nargs=0 UpdateTimestamp execute utilsvim#UpdateTimestamp()
 nnoremap <nowait> <silent> <Plug>(UpdateTimestamp) :call utilsvim#UpdateTimestamp()<CR>
-" If we have set the relevant config option set, enable an autocmd for automatic
-" timestamping
-if exists("g:utilsvim_autotimestamp") && g:utilsvim_autotimestamp == 1
-    autocmd! BufWritePre * :call UpdateTimestamp()
-endif
 
 "---------------------------------------------------------------------
 " Toggling relative line numbers
@@ -102,3 +92,20 @@ nnoremap <nowait> <silent> <Plug>(DeleteGitConflictSection) :call utilsvim#Delet
 "---------------------------------------------------------------------
 command! -nargs=0 ShowMappedFKeys execute utilsvim#ShowMappedFKeys()
 nnoremap <nowait> <silent> <Plug>(ShowMappedFKeys) :call utilsvim#ShowMappedFKeys()<CR>
+
+"---------------------------------------------------------------------
+" Setup autocmds for utilsvim
+"---------------------------------------------------------------------
+augroup utilsvimAuGroup
+    autocmd!
+    " If we have set the relevant config option set, enable an autocmd for automatic
+    " version incrementing
+    if exists("g:utilsvim_autoversion") && g:utilsvim_autoversion == 1
+        autocmd BufWritePre * :call utilsvim#UpdatePatchVersion()
+    endif
+    " If we have set the relevant config option set, enable an autocmd for automatic
+    " timestamping
+    if exists("g:utilsvim_autotimestamp") && g:utilsvim_autotimestamp == 1
+        autocmd BufWritePre * :call utilsvim#UpdateTimestamp()
+    endif
+augroup END

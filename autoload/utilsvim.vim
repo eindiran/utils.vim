@@ -55,8 +55,8 @@ function! utilsvim#UpdateTimestamp()
     " Matches "[LAST] (CHANGE[D]|UPDATE[D]|MODIFIED): "
     " Case sensitive. Replaces everything after that w/ timestamp
     " in format: "FRI 07 JUL 2017"
-    let pat = "\(\(LAST\)\?\s*\(CHANGED\?\|MODIFIED\|UPDATED\?\)\s*:\s*\).*"
-    let rep = "\1" . strftime("%a %d %b %Y")
+    let pat = '\(\(LAST\)\?\s*\(CHANGED\?\|MODIFIED\|UPDATED\?\)\s*:\s*\).*'
+    let rep = '\1' . strftime('%a %d %b %Y')
     call s:subst(1, 20, pat, rep)
     " Hardcoded to first 20 lines
 endfunction
